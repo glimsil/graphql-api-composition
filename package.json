@@ -1,0 +1,17 @@
+{
+    "name": "glimsil-graphql-api-composition",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "nodemon index.js"
+    },
+    "keywords": [],
+    "dependencies": {
+      "graphql-yoga": "^1.6.1",
+      "node-fetch": "^2.1.2"
+    },
+    "devDependencies": {
+      "nodemon": "^1.17.2"
+    }
+  }
