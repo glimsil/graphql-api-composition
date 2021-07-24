@@ -1,20 +1,20 @@
 const { GraphQLServer } = require("graphql-yoga");
 const fetch = require("node-fetch");
-​
+
 const typeDefs = `
   type Query {
     hello(name: String): String!
     person(id: Int!): Person
     persons: [Person]
   }
-​
+
   type Planet {
     name: String
     rotation_period: String
     orbital_period: String
     films: [Film]
   }
-​
+
   type Film {
     title: String
     episode_id: Int
@@ -23,7 +23,7 @@ const typeDefs = `
     producer: String
     release_date: String
   }
-​
+
   type Person {
     name: String
     height: String
@@ -39,16 +39,16 @@ const typeDefs = `
     adviceFromKanye: String
   }
 `;
-​
+
 const resolveFilms = parent => {
   const promises = parent.films.map(async url => {
     const response = await fetch(url);
     return response.json();
   });
-​
+
   return Promise.all(promises);
 };
-​
+
 const resolvers = {
   Planet: {
     films: resolveFilms
@@ -69,18 +69,18 @@ const resolvers = {
     }
   },
   Query: {
-    hello: (_, { name }) => Hello ${name || "World"},
+    hello: (_, { name }) => `Hello ${name || "World"}`,
     person: async (_, { id }) => {
-      const response = await fetch(https://swapi.dev/api/people/${id}/);
+      const response = await fetch(`https://swapi.dev/api/people/${id}/`);
       return response.json();
     },
     persons: async (_) => {
-      const response = await fetch(https://swapi.dev/api/people/);
+      const response = await fetch(`https://swapi.dev/api/people/`);
       const results = await response.json();
       return results['results']
     }
   }
 };
-​
+
 const server = new GraphQLServer({ typeDefs, resolvers });
 server.start(() => console.log("Server is running on localhost:4000"));
